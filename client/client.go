@@ -8,9 +8,9 @@ import (
 	antchainutil "github.com/antchain-openapi-sdk-go/antchain-util/service"
 )
 
-/**
- * Model for initing client
- */
+// Description:
+//
+// Model for initing client
 type Config struct {
 	// accesskey id
 	AccessKeyId *string `json:"accessKeyId,omitempty" xml:"accessKeyId,omitempty"`
@@ -19,26 +19,66 @@ type Config struct {
 	// security token
 	SecurityToken *string `json:"securityToken,omitempty" xml:"securityToken,omitempty"`
 	// http protocol
+	//
+	// example:
+	//
+	// http
 	Protocol *string `json:"protocol,omitempty" xml:"protocol,omitempty"`
 	// read timeout
+	//
+	// example:
+	//
+	// 10
 	ReadTimeout *int `json:"readTimeout,omitempty" xml:"readTimeout,omitempty"`
 	// connect timeout
+	//
+	// example:
+	//
+	// 10
 	ConnectTimeout *int `json:"connectTimeout,omitempty" xml:"connectTimeout,omitempty"`
 	// http proxy
+	//
+	// example:
+	//
+	// http://localhost
 	HttpProxy *string `json:"httpProxy,omitempty" xml:"httpProxy,omitempty"`
 	// https proxy
+	//
+	// example:
+	//
+	// https://localhost
 	HttpsProxy *string `json:"httpsProxy,omitempty" xml:"httpsProxy,omitempty"`
 	// endpoint
+	//
+	// example:
+	//
+	// cs.aliyuncs.com
 	Endpoint *string `json:"endpoint,omitempty" xml:"endpoint,omitempty"`
 	// proxy white list
+	//
+	// example:
+	//
+	// http://localhost
 	NoProxy *string `json:"noProxy,omitempty" xml:"noProxy,omitempty"`
 	// max idle conns
+	//
+	// example:
+	//
+	// 3
 	MaxIdleConns *int `json:"maxIdleConns,omitempty" xml:"maxIdleConns,omitempty"`
 	// user agent
+	//
+	// example:
+	//
+	// Alibabacloud/1
 	UserAgent *string `json:"userAgent,omitempty" xml:"userAgent,omitempty"`
 	// socks5 proxy
 	Socks5Proxy *string `json:"socks5Proxy,omitempty" xml:"socks5Proxy,omitempty"`
 	// socks5 network
+	//
+	// example:
+	//
+	// TCP
 	Socks5NetWork *string `json:"socks5NetWork,omitempty" xml:"socks5NetWork,omitempty"`
 	// 长链接最大空闲时长
 	MaxIdleTimeMillis *int `json:"maxIdleTimeMillis,omitempty" xml:"maxIdleTimeMillis,omitempty"`
@@ -295,6 +335,90 @@ func (s *OperateAgentProxyResponse) SetChatCompletionObject(v string) *OperateAg
 	return s
 }
 
+type QueryBoardProxyRequest struct {
+	// OAuth模式下的授权token
+	AuthToken         *string `json:"auth_token,omitempty" xml:"auth_token,omitempty"`
+	ProductInstanceId *string `json:"product_instance_id,omitempty" xml:"product_instance_id,omitempty"`
+	// 关键字
+	Keyword *string `json:"keyword,omitempty" xml:"keyword,omitempty" require:"true"`
+	// boardId
+	BoardId *string `json:"board_id,omitempty" xml:"board_id,omitempty" require:"true"`
+	// 返回条数
+	TopN *int64 `json:"top_n,omitempty" xml:"top_n,omitempty"`
+}
+
+func (s QueryBoardProxyRequest) String() string {
+	return tea.Prettify(s)
+}
+
+func (s QueryBoardProxyRequest) GoString() string {
+	return s.String()
+}
+
+func (s *QueryBoardProxyRequest) SetAuthToken(v string) *QueryBoardProxyRequest {
+	s.AuthToken = &v
+	return s
+}
+
+func (s *QueryBoardProxyRequest) SetProductInstanceId(v string) *QueryBoardProxyRequest {
+	s.ProductInstanceId = &v
+	return s
+}
+
+func (s *QueryBoardProxyRequest) SetKeyword(v string) *QueryBoardProxyRequest {
+	s.Keyword = &v
+	return s
+}
+
+func (s *QueryBoardProxyRequest) SetBoardId(v string) *QueryBoardProxyRequest {
+	s.BoardId = &v
+	return s
+}
+
+func (s *QueryBoardProxyRequest) SetTopN(v int64) *QueryBoardProxyRequest {
+	s.TopN = &v
+	return s
+}
+
+type QueryBoardProxyResponse struct {
+	// 请求唯一ID，用于链路跟踪和问题排查
+	ReqMsgId *string `json:"req_msg_id,omitempty" xml:"req_msg_id,omitempty"`
+	// 结果码，一般OK表示调用成功
+	ResultCode *string `json:"result_code,omitempty" xml:"result_code,omitempty"`
+	// 异常信息的文本描述
+	ResultMsg *string `json:"result_msg,omitempty" xml:"result_msg,omitempty"`
+	// 结果
+	ResultJson *string `json:"result_json,omitempty" xml:"result_json,omitempty"`
+}
+
+func (s QueryBoardProxyResponse) String() string {
+	return tea.Prettify(s)
+}
+
+func (s QueryBoardProxyResponse) GoString() string {
+	return s.String()
+}
+
+func (s *QueryBoardProxyResponse) SetReqMsgId(v string) *QueryBoardProxyResponse {
+	s.ReqMsgId = &v
+	return s
+}
+
+func (s *QueryBoardProxyResponse) SetResultCode(v string) *QueryBoardProxyResponse {
+	s.ResultCode = &v
+	return s
+}
+
+func (s *QueryBoardProxyResponse) SetResultMsg(v string) *QueryBoardProxyResponse {
+	s.ResultMsg = &v
+	return s
+}
+
+func (s *QueryBoardProxyResponse) SetResultJson(v string) *QueryBoardProxyResponse {
+	s.ResultJson = &v
+	return s
+}
+
 type Client struct {
 	Endpoint                *string
 	RegionId                *string
@@ -317,10 +441,11 @@ type Client struct {
 	MaxRequestsPerHost      *int
 }
 
-/**
- * Init client with Config
- * @param config config contains the necessary information to create a client
- */
+// Description:
+//
+// # Init client with Config
+//
+// @param config - config contains the necessary information to create a client
 func NewClient(config *Config) (*Client, error) {
 	client := new(Client)
 	err := client.Init(config)
@@ -328,7 +453,7 @@ func NewClient(config *Config) (*Client, error) {
 }
 
 func (client *Client) Init(config *Config) (_err error) {
-	if tea.BoolValue(util.IsUnset(tea.ToMap(config))) {
+	if tea.BoolValue(util.IsUnset(config)) {
 		_err = tea.NewSDKError(map[string]interface{}{
 			"code":    "ParameterMissing",
 			"message": "'config' can not be unset",
@@ -357,16 +482,23 @@ func (client *Client) Init(config *Config) (_err error) {
 	return nil
 }
 
-/**
- * Encapsulate the request and invoke the network
- * @param action api name
- * @param protocol http or https
- * @param method e.g. GET
- * @param pathname pathname of every api
- * @param request which contains request params
- * @param runtime which controls some details of call api, such as retry times
- * @return the response
- */
+// Description:
+//
+// # Encapsulate the request and invoke the network
+//
+// @param action - api name
+//
+// @param protocol - http or https
+//
+// @param method - e.g. GET
+//
+// @param pathname - pathname of every api
+//
+// @param request - which contains request params
+//
+// @param runtime - which controls some details of call api, such as retry times
+//
+// @return the response
 func (client *Client) DoRequest(version *string, action *string, protocol *string, method *string, pathname *string, request map[string]interface{}, headers map[string]*string, runtime *util.RuntimeOptions) (_result map[string]interface{}, _err error) {
 	_err = tea.Validate(runtime)
 	if _err != nil {
@@ -417,7 +549,7 @@ func (client *Client) DoRequest(version *string, action *string, protocol *strin
 				"req_msg_id":       antchainutil.GetNonce(),
 				"access_key":       client.AccessKeyId,
 				"base_sdk_version": tea.String("TeaSDK-2.0"),
-				"sdk_version":      tea.String("1.1.2"),
+				"sdk_version":      tea.String("1.2.1"),
 				"_prod_code":       tea.String("ERAPROD"),
 				"_prod_channel":    tea.String("default"),
 			}
@@ -475,10 +607,11 @@ func (client *Client) DoRequest(version *string, action *string, protocol *strin
 	return _resp, _err
 }
 
-/**
- * Description: ais代理
- * Summary: ais代理
- */
+// Description:
+//
+// Description: ais代理
+//
+// Summary: ais代理
 func (client *Client) OperateAisProxy(request *OperateAisProxyRequest) (_result *OperateAisProxyResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
 	headers := make(map[string]*string)
@@ -491,10 +624,11 @@ func (client *Client) OperateAisProxy(request *OperateAisProxyRequest) (_result 
 	return _result, _err
 }
 
-/**
- * Description: ais代理
- * Summary: ais代理
- */
+// Description:
+//
+// Description: ais代理
+//
+// Summary: ais代理
 func (client *Client) OperateAisProxyEx(request *OperateAisProxyRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *OperateAisProxyResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
@@ -509,10 +643,11 @@ func (client *Client) OperateAisProxyEx(request *OperateAisProxyRequest, headers
 	return _result, _err
 }
 
-/**
- * Description: 灵矽 Agent 代理
- * Summary: 灵矽 Agent 代理
- */
+// Description:
+//
+// Description: 灵矽 Agent 代理
+//
+// Summary: 灵矽 Agent 代理
 func (client *Client) OperateAgentProxy(request *OperateAgentProxyRequest) (_result *OperateAgentProxyResponse, _err error) {
 	runtime := &util.RuntimeOptions{}
 	headers := make(map[string]*string)
@@ -525,10 +660,11 @@ func (client *Client) OperateAgentProxy(request *OperateAgentProxyRequest) (_res
 	return _result, _err
 }
 
-/**
- * Description: 灵矽 Agent 代理
- * Summary: 灵矽 Agent 代理
- */
+// Description:
+//
+// Description: 灵矽 Agent 代理
+//
+// Summary: 灵矽 Agent 代理
 func (client *Client) OperateAgentProxyEx(request *OperateAgentProxyRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *OperateAgentProxyResponse, _err error) {
 	_err = util.ValidateModel(request)
 	if _err != nil {
@@ -536,6 +672,42 @@ func (client *Client) OperateAgentProxyEx(request *OperateAgentProxyRequest, hea
 	}
 	_result = &OperateAgentProxyResponse{}
 	_body, _err := client.DoRequest(tea.String("1.0"), tea.String("antdigital.eraprod.agent.proxy.operate"), tea.String("HTTPS"), tea.String("POST"), tea.String("/gateway.do"), tea.ToMap(request), headers, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_err = tea.Convert(_body, &_result)
+	return _result, _err
+}
+
+// Description:
+//
+// Description: boardAI代理搜索
+//
+// Summary: boardAI代理搜索
+func (client *Client) QueryBoardProxy(request *QueryBoardProxyRequest) (_result *QueryBoardProxyResponse, _err error) {
+	runtime := &util.RuntimeOptions{}
+	headers := make(map[string]*string)
+	_result = &QueryBoardProxyResponse{}
+	_body, _err := client.QueryBoardProxyEx(request, headers, runtime)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = _body
+	return _result, _err
+}
+
+// Description:
+//
+// Description: boardAI代理搜索
+//
+// Summary: boardAI代理搜索
+func (client *Client) QueryBoardProxyEx(request *QueryBoardProxyRequest, headers map[string]*string, runtime *util.RuntimeOptions) (_result *QueryBoardProxyResponse, _err error) {
+	_err = util.ValidateModel(request)
+	if _err != nil {
+		return _result, _err
+	}
+	_result = &QueryBoardProxyResponse{}
+	_body, _err := client.DoRequest(tea.String("1.0"), tea.String("antdigital.eraprod.board.proxy.query"), tea.String("HTTPS"), tea.String("POST"), tea.String("/gateway.do"), tea.ToMap(request), headers, runtime)
 	if _err != nil {
 		return _result, _err
 	}
